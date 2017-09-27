@@ -39,6 +39,13 @@
 #include <unordered_set>
 #include <type_traits>
 
+#if (_MSC_VER >=  1900)
+#define NOEXCEPT noexcept
+#else 
+#define NOEXCEPT 
+#endif
+
+
 #ifdef ARGS_TESTNAMESPACE
 namespace argstest
 {
@@ -387,12 +394,12 @@ namespace args
             Base(const std::string &help_) : matched(false), help(help_) {}
             virtual ~Base() {}
 
-            virtual bool Matched() const noexcept
+			virtual bool Matched() const NOEXCEPT
             {
                 return matched;
             }
 
-            operator bool() const noexcept
+			operator bool() const NOEXCEPT
             {
                 return Matched();
             }
@@ -404,7 +411,7 @@ namespace args
                 return description;
             }
 
-            virtual void Reset() noexcept
+			virtual void Reset() NOEXCEPT
             {
                 matched = false;
 #ifdef ARGS_NOEXCEPT
@@ -446,13 +453,13 @@ namespace args
             }
 
             /// Sets a kick-out value for building subparsers
-            void KickOut(bool kickout_) noexcept
+			void KickOut(bool kickout_) NOEXCEPT
             {
                 this->kickout = kickout_;
             }
 
             /// Gets the kick-out value for building subparsers
-            bool KickOut() const noexcept
+			bool KickOut() const NOEXCEPT
             {
                 return kickout;
             }
@@ -578,7 +585,7 @@ namespace args
 
             virtual void ParseValue(const std::string &value_) = 0;
 
-            virtual void Reset() noexcept override
+			virtual void Reset() NOEXCEPT override
             {
                 matched = false;
                 ready = true;
@@ -752,7 +759,7 @@ namespace args
 
             /** Whether or not this group matches validation
              */
-            virtual bool Matched() const noexcept override
+			virtual bool Matched() const NOEXCEPT override
             {
                 return validator(*this);
             }
@@ -816,7 +823,7 @@ namespace args
                 return names;
             }
 
-            virtual void Reset() noexcept override
+			virtual void Reset() NOEXCEPT override
             {
                 for (auto &child: children)
                 {
@@ -1476,7 +1483,7 @@ namespace args
 
             /** Get whether this was matched
              */
-            bool Get() const noexcept
+			bool Get() const NOEXCEPT
             {
                 return Matched();
             }
@@ -1517,12 +1524,12 @@ namespace args
 
             /** Get the count
              */
-            int &Get() noexcept
+            int &Get() NOEXCEPT
             {
                 return count;
             }
 
-            virtual void Reset() noexcept override
+            virtual void Reset() NOEXCEPT override
             {
                 FlagBase::Reset();
                 count = startcount;
@@ -1608,7 +1615,7 @@ namespace args
 
             /** Get the value
              */
-            T &Get() noexcept
+            T &Get() NOEXCEPT
             {
                 return value;
             }
@@ -1669,7 +1676,7 @@ namespace args
 
             /** Get the values
              */
-            Container &Get() noexcept
+            Container &Get() NOEXCEPT
             {
                 return values;
             }
@@ -1679,38 +1686,38 @@ namespace args
                 return name + std::string("...");
             }
 
-            virtual void Reset() noexcept override
+            virtual void Reset() NOEXCEPT override
             {
                 ValueFlagBase::Reset();
                 values.clear();
             }
 
-            iterator begin() noexcept
+            iterator begin() NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator begin() const noexcept
+            const_iterator begin() const NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator cbegin() const noexcept
+            const_iterator cbegin() const NOEXCEPT
             {
                 return values.cbegin();
             }
 
-            iterator end() noexcept
+            iterator end() NOEXCEPT
             {
                 return values.end();
             }
 
-            const_iterator end() const noexcept 
+            const_iterator end() const NOEXCEPT 
             {
                 return values.end();
             }
 
-            const_iterator cend() const noexcept
+            const_iterator cend() const NOEXCEPT
             {
                 return values.cend();
             }
@@ -1773,7 +1780,7 @@ namespace args
 
             /** Get the value
              */
-            T &Get() noexcept
+            T &Get() NOEXCEPT
             {
                 return value;
             }
@@ -1851,7 +1858,7 @@ namespace args
 
             /** Get the value
              */
-            Container &Get() noexcept
+            Container &Get() NOEXCEPT
             {
                 return values;
             }
@@ -1861,38 +1868,38 @@ namespace args
                 return name + std::string("...");
             }
 
-            virtual void Reset() noexcept override
+            virtual void Reset() NOEXCEPT override
             {
                 ValueFlagBase::Reset();
                 values.clear();
             }
 
-            iterator begin() noexcept
+            iterator begin() NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator begin() const noexcept
+            const_iterator begin() const NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator cbegin() const noexcept
+            const_iterator cbegin() const NOEXCEPT
             {
                 return values.cbegin();
             }
 
-            iterator end() noexcept
+            iterator end() NOEXCEPT
             {
                 return values.end();
             }
 
-            const_iterator end() const noexcept 
+            const_iterator end() const NOEXCEPT 
             {
                 return values.end();
             }
 
-            const_iterator cend() const noexcept
+            const_iterator cend() const NOEXCEPT
             {
                 return values.cend();
             }
@@ -1935,7 +1942,7 @@ namespace args
 
             /** Get the value
              */
-            T &Get() noexcept
+            T &Get() NOEXCEPT
             {
                 return value;
             }
@@ -2001,43 +2008,43 @@ namespace args
 
             /** Get the values
              */
-            Container &Get() noexcept
+            Container &Get() NOEXCEPT
             {
                 return values;
             }
 
-            virtual void Reset() noexcept override
+            virtual void Reset() NOEXCEPT override
             {
                 PositionalBase::Reset();
                 values.clear();
             }
 
-            iterator begin() noexcept
+            iterator begin() NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator begin() const noexcept
+            const_iterator begin() const NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator cbegin() const noexcept
+            const_iterator cbegin() const NOEXCEPT
             {
                 return values.cbegin();
             }
 
-            iterator end() noexcept
+            iterator end() NOEXCEPT
             {
                 return values.end();
             }
 
-            const_iterator end() const noexcept 
+            const_iterator end() const NOEXCEPT 
             {
                 return values.end();
             }
 
-            const_iterator cend() const noexcept
+            const_iterator cend() const NOEXCEPT
             {
                 return values.cend();
             }
@@ -2102,7 +2109,7 @@ namespace args
 
             /** Get the value
              */
-            T &Get() noexcept
+            T &Get() NOEXCEPT
             {
                 return value;
             }
@@ -2182,7 +2189,7 @@ namespace args
 
             /** Get the value
              */
-            Container &Get() noexcept
+            Container &Get() NOEXCEPT
             {
                 return values;
             }
@@ -2192,38 +2199,38 @@ namespace args
                 return name + std::string("...");
             }
 
-            virtual void Reset() noexcept override
+            virtual void Reset() NOEXCEPT override
             {
                 PositionalBase::Reset();
                 values.clear();
             }
 
-            iterator begin() noexcept
+            iterator begin() NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator begin() const noexcept
+            const_iterator begin() const NOEXCEPT
             {
                 return values.begin();
             }
 
-            const_iterator cbegin() const noexcept
+            const_iterator cbegin() const NOEXCEPT
             {
                 return values.cbegin();
             }
 
-            iterator end() noexcept
+            iterator end() NOEXCEPT
             {
                 return values.end();
             }
 
-            const_iterator end() const noexcept 
+            const_iterator end() const NOEXCEPT 
             {
                 return values.end();
             }
 
-            const_iterator cend() const noexcept
+            const_iterator cend() const NOEXCEPT
             {
                 return values.cend();
             }
